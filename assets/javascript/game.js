@@ -24,6 +24,24 @@ var enemyDefender = {};
 //Variable for Your Character's Attack Power
 var playerAttackPower = {};
 
+//Object of character pictures
+var characterImages = {
+    "luke":"./assets/images/luke-skywalker.jpg",
+    "maul":"./assets/images/darth-maul.jpg",
+    "vader":"./assets/images/darth-vader.jpg",
+    "obi":"./assets/images/obi-wan.jpg"
+}
+
+
+//Add pictures of characters to DOM
+for (a=0; a < Object.values(characterImages).length; a++) {
+    $("#startingCharacters").append("<img src=" + Object.values(characterImages)[a] + " id=" + Object.keys(characterImages)[a] + ">")
+};
+
+
+//Set the CSS class for each character image to "characterImgs"
+ $("#startingCharacters").children("img").attr("class", "characterImgs");
+
 
 //Randomize the amount of HP for each character (between 100 and 200 maybe?)
     //I think they're supposed to be set to the values in the video
@@ -31,14 +49,36 @@ var playerAttackPower = {};
 
 
 //On.Click event for the player to choose their character
-$(".selectCharacter").on("click", function() {
-
+/*
+$("#startingCharacters").on("click", function() {
+console.log("Bananas")
     //Move other characters from the character bay to the zone "Enemies Available to Attack"
+    if ($("#luke")) {console.log("Batman")}
         // if (Luke is choosen) {Move other characters to array enemiesToAttack}
         // elseif (Darth Maul is choosen) {Move other characters to array enemiesToAttack}
     
         //Color the character background's red
-});
+});*/
+//How am I going to prevent them from hopping around after another click?
+if ($("#luke").on("click", function() {
+    $("#luke").appendTo("#choosenCharacter");
+    $("#startingCharacters").children("img").appendTo("#enemiesToAttack")
+}));
+
+if ($("#maul").on("click", function() {
+    $("#maul").appendTo("#choosenCharacter");
+    $("#startingCharacters").children("img").appendTo("#enemiesToAttack")
+}));
+
+if ($("#vader").on("click", function() {
+    $("#vader").appendTo("#choosenCharacter");
+    $("#startingCharacters").children("img").appendTo("#enemiesToAttack")
+}));
+
+if ($("#obi").on("click", function() {
+    $("#obi").appendTo("#choosenCharacter");
+    $("#startingCharacters").children("img").appendTo("#enemiesToAttack")
+}));
 
 //On.Click event for the player to choose which enemy to attack first
     //Move this character to the zone "Defender"

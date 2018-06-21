@@ -1,9 +1,10 @@
 <!doctype HTML>
+<html>
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
     <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
-    
+    <link rel="stylesheet" href="./assets/css/style.css">
 </head>
 <body>
     
@@ -14,16 +15,22 @@
     </header>
 
     <Section>
-        <div>
-            <!--Pictures of characters go here-->
+        <div id="startingCharacters">
+            <!--Pictures of characters start here-->
         </div>
 
         <div>
             <h2>Your Character</h2>
+            <div id="choosenCharacter">
+                <!--The player's choice of character here-->
+            </div>
         </div>
 
         <div>
             <h2>Enemies Available to Attack</h2>
+            <div id="enemiesToAttack">
+                <!--Enemies...everywhere-->
+            </div>
         </div>
 
         <div>
@@ -37,4 +44,7 @@
         </div>
     </Section>
 
+    <script src="./assets/javascript/game.js"> </script>
+
 </body>
+</html>
