@@ -35,8 +35,9 @@ var characterAtk = {
 //Variable array for 'Enemies Available to Attack'
 var enemiesToAttack = {};
 
-
-
+//Testing to see if anyone has moved to #defenderDiv
+var defenderOccupant = $("#defenderDiv").children("img").length;
+console.log("defenderOccupant be 0: ", defenderOccupant)
 
 
 //Variable for Your Character's Attack Power
@@ -86,7 +87,7 @@ if ($("#startingCharacters").on("click", function(event) {
         $("#luke").appendTo("#choosenCharacter");
         $("#startingCharacters").children("img").appendTo("#enemiesToAttack");
         console.log("choosen luke");
-        console.log("HP: " + characterHP.luke)
+        console.log("Luke HP: " + characterHP.luke)
     }
 
     
@@ -104,7 +105,7 @@ if ($("#startingCharacters").on("click", function(event) {
         $("#maul").appendTo("#choosenCharacter");
         $("#startingCharacters").children("img").appendTo("#enemiesToAttack");
         console.log("choosen maul");
-        console.log("HP: " + characterHP.maul)
+        console.log("Maul HP: " + characterHP.maul)
     }
 
 
@@ -114,7 +115,7 @@ if ($("#startingCharacters").on("click", function(event) {
         $("#vader").appendTo("#choosenCharacter");
         $("#startingCharacters").children("img").appendTo("#enemiesToAttack");
         console.log("choosen vader");
-        console.log("HP: " + characterHP.vader)
+        console.log("Vader HP: " + characterHP.vader)
     }
 
 
@@ -124,7 +125,7 @@ if ($("#startingCharacters").on("click", function(event) {
         $("#obi").appendTo("#choosenCharacter");
         $("#startingCharacters").children("img").appendTo("#enemiesToAttack");
         console.log("choosen obi");
-        console.log("HP: " + characterHP.obi)
+        console.log("Obi HP: " + characterHP.obi)
     };
 }));
 
@@ -179,7 +180,10 @@ if  ($("#enemiesToAttack").on("click", function(event) {
             
             //Color the defender's background black
             $("#defenderDiv").children("img").attr("class", "defenderImgs");
-            console.log("defender maul")
+            console.log("defender maul");
+            defenderOccupant = $("#defenderDiv").children("img").length;
+            console.log("defenderOccupant be 1: ", defenderOccupant)
+            console.log("defenderOccupant is 1? ", defenderOccupant === 1)
         }
     
     
@@ -203,18 +207,27 @@ if  ($("#enemiesToAttack").on("click", function(event) {
             $("#defenderDiv").children("img").attr("class", "defenderImgs");
             console.log("defender obi")
         }
+                //Trash console.log("test2 ", $("#defenderDiv").children("img").length)
     }));
 
 
 //Variable to store the 'Defender' character HP
     //var defendersHP = characterHP[$("#defenderDiv").children("img")[0].id];
-    var defendersHP = 0;
+    
+    if (true) {
+        var defendersHP = characterHP[$("#defenderDiv").children("img")[0].id];
+        var characterAtk = characterAtk[$("#choosenCharacter").children("img")[0].id];
+        console.log("First def HP Check ", defendersHP)
+    };
+            
+    
 
 //An attack button for your character to attack the defender
     //Why isn't the attack button subtracting HP from the defender???
 $("#attackButton").on("click", function() {
-    defendersHP = characterHP[$("#defenderDiv").children("img")[0].id];
-    defendersHP = characterHP[$("#defenderDiv").children("img")[0].id] - characterAtk[$("#choosenCharacter").children("img")[0].id];
+    defendersHP = defendersHP - characterAtk;
+    console.log("defenders HP ", defendersHP);
+    //defendersHP = characterHP[$("#defenderDiv").children("img")[0].id] - 
     console.log("After attack: " + characterHP[$("#defenderDiv").children("img")[0].id]);
     console.log("Dude Attacking: " + $('#choosenCharacter').children("img")[0].id);
     console.log("Dude Atk Amt: " + characterAtk[$("#choosenCharacter").children("img")[0].id])
