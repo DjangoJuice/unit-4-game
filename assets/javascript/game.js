@@ -7,7 +7,7 @@ var characterHP = {
     "obi":"120"
 }
 
-console.log("Char HP Test Maul: " + characterHP.maul)
+//console.log("Char HP Test Maul: " + characterHP.maul)
 
 var characterAtk = {
     "luke":"10",
@@ -36,8 +36,7 @@ var characterAtk = {
 var enemiesToAttack = {};
 
 
-//Variable to store the 'Defender' character
-var enemyDefender = {};
+
 
 
 //Variable for Your Character's Attack Power
@@ -82,44 +81,51 @@ for (a=0; a < Object.values(characterImages).length; a++) {
                 //Color the character background's red
         });*/
 //How am I going to prevent them from hopping around after another click?
-if ($("#startingCharacters").on("click", function() {
-     
-    if ($("#luke").on("click", function() {
+if ($("#startingCharacters").on("click", function(event) {
+    if (event.target.id === "luke") {
         $("#luke").appendTo("#choosenCharacter");
         $("#startingCharacters").children("img").appendTo("#enemiesToAttack");
         console.log("choosen luke");
         console.log("HP: " + characterHP.luke)
-    }));
+    }
+
+    
+    // if ($("#luke").on("click", function() {
+    //     $("#luke").appendTo("#choosenCharacter");
+    //     $("#startingCharacters").children("img").appendTo("#enemiesToAttack");
+    //     console.log("choosen luke");
+    //     console.log("HP: " + characterHP.luke)
+    // }))
 
 
 
      
-    else if ($("#maul").on("click", function() {
+    else if (event.target.id === "maul") {
         $("#maul").appendTo("#choosenCharacter");
         $("#startingCharacters").children("img").appendTo("#enemiesToAttack");
         console.log("choosen maul");
         console.log("HP: " + characterHP.maul)
-    }));
+    }
 
 
 
      
-    else if ($("#vader").on("click", function() {
+    else if (event.target.id === "vader") {
         $("#vader").appendTo("#choosenCharacter");
         $("#startingCharacters").children("img").appendTo("#enemiesToAttack");
         console.log("choosen vader");
         console.log("HP: " + characterHP.vader)
-    }));
+    }
 
 
 
      
-    else if ($("#obi").on("click", function() {
+    else if (event.target.id === "obi") {
         $("#obi").appendTo("#choosenCharacter");
         $("#startingCharacters").children("img").appendTo("#enemiesToAttack");
         console.log("choosen obi");
         console.log("HP: " + characterHP.obi)
-    }));
+    };
 }));
 
         /*
@@ -146,56 +152,69 @@ if ($("#startingCharacters").on("click", function() {
 //On.Click event for the player to choose which enemy to attack first
     //Move this character to the zone "Defender"
     //Should prevent additional defenders until this one is defeated
-    if ($("#enemiesToAttack").on("click", function() {
+if  ($("#enemiesToAttack").on("click", function(event) {
      
         //Moves the enemy to being a defender
-        if ($("#luke").on("click", function() {
-            $("#luke").appendTo("#defenderDiv");
+    if  (event.target.id === "luke") {
+        $("#luke").appendTo("#defenderDiv");
 
-            //Color the defender's background black
-            $("#defenderDiv").children("img").attr("class", "defenderImgs");
-            console.log("defender luke")
-        }));
+        //Color the defender's background black
+        $("#defenderDiv").children("img").attr("class", "defenderImgs");
+        console.log("defender luke")
+
+
+            // if ($("#luke").on("click", function() {
+            //     $("#luke").appendTo("#defenderDiv");
+
+            //     //Color the defender's background black
+            //     $("#defenderDiv").children("img").attr("class", "defenderImgs");
+            //     console.log("defender luke")
+            // }));
+        }
     
     
-    
-        //Moves the enemy to being a defender
-        if ($("#maul").on("click", function() {
+            //Moves the enemy to being a defender
+    else if (event.target.id === "maul") {
             $("#maul").appendTo("#defenderDiv");
             
             //Color the defender's background black
             $("#defenderDiv").children("img").attr("class", "defenderImgs");
             console.log("defender maul")
-        }));
+        }
     
     
     
-        //Moves the enemy to being a defender 
-        if ($("#vader").on("click", function() {
+            //Moves the enemy to being a defender 
+    else if (event.target.id === "vader") {
             $("#vader").appendTo("#defenderDiv");
 
             //Color the defender's background black
             $("#defenderDiv").children("img").attr("class", "defenderImgs");
             console.log("defender vader")
-        }));
+        }
     
     
     
         //Moves the enemy to being a defender 
-        if ($("#obi").on("click", function() {
+    else if (event.target.id === "obi") {
             $("#obi").appendTo("#defenderDiv");
 
             //Color the defender's background black
             $("#defenderDiv").children("img").attr("class", "defenderImgs");
             console.log("defender obi")
-        }));
+        }
     }));
 
 
+//Variable to store the 'Defender' character HP
+    //var defendersHP = characterHP[$("#defenderDiv").children("img")[0].id];
+    var defendersHP = 0;
 
 //An attack button for your character to attack the defender
+    //Why isn't the attack button subtracting HP from the defender???
 $("#attackButton").on("click", function() {
-    characterHP[$("#defenderDiv").children("img")[0].id] - characterAtk[$("#choosenCharacter").children("img")[0].id];
+    defendersHP = characterHP[$("#defenderDiv").children("img")[0].id];
+    defendersHP = characterHP[$("#defenderDiv").children("img")[0].id] - characterAtk[$("#choosenCharacter").children("img")[0].id];
     console.log("After attack: " + characterHP[$("#defenderDiv").children("img")[0].id]);
     console.log("Dude Attacking: " + $('#choosenCharacter').children("img")[0].id);
     console.log("Dude Atk Amt: " + characterAtk[$("#choosenCharacter").children("img")[0].id])
