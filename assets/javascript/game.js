@@ -1,55 +1,67 @@
-//Maybe do an object to store character names with their HP
-//Variable for each character's starting HP
-var characterHP = {
-    "luke":"100",
-    "maul":"100",
-    "vader":"150",
-    "obi":"120"
-}
+// Each character needs to start with HP and Atk power to battle
+var characters = {
+    luke: {
+        hp: 100,
+        atk: 10,
+    },
 
-//console.log("Char HP Test Maul: " + characterHP.maul)
+    maul: {
+        hp: 100,
+        atk: 10,
+    },
 
-var characterAtk = {
-    "luke":"10",
-    "maul":"10",
-    "vader":"10",
-    "obi":"10"
-}
+    vader: {
+        hp: 150,
+        atk: 10,
+    },
 
-//Variables to hold the character names
-    //meh don't need it?
-        /*var lukeSkywalker = 100;
-
-        var darthMaul = 100;
-
-        var darthVader = 150;
-
-        var obiWanKenobi = 120;
-        */
+    obi: {
+        hp: 120,
+        atk: 10,
+    }
+};
 
 
-
-//Variable array for available characters
-    //????
-
-//Variable array for 'Enemies Available to Attack'
-var enemiesToAttack = {};
-
-//Testing to see if anyone has moved to #defenderDiv
-var defenderOccupant = $("#defenderDiv").children("img").length;
-console.log("defenderOccupant be 0: ", defenderOccupant)
+// Just an array to store characters before relocating them during the game
+var charactersArray = Object.keys(characters)
+//console.log("Show me characters ", charactersArray)
 
 
-//Variable for Your Character's Attack Power
-var playerAttackPower = {};
+//Stores the one character chosen by the player
+var chosenCharacter;
 
-//Object of character pictures
+
+//This will help determine who's here and not defending yet
+var enemiesArray = [];
+
+
+//Variable array for 'Defender'
+var defenderArray = [];
+
+
+// Tracking HP during the player's battles
+var chosenCharacterHp;
+
+
+// Tracking Atk during the player's battles
+var chosenCharacterAtk;
+
+
+// Tracking Opponent's HP during the player's battles
+var defenderHp;
+
+
+// Tracking Opponent's Atk during the player's battles
+var defenderAtk;
+
+
+//These locations will show the character pictures
 var characterImages = {
     "luke":"./assets/images/luke-skywalker.jpg",
     "maul":"./assets/images/darth-maul.jpg",
     "vader":"./assets/images/darth-vader.jpg",
     "obi":"./assets/images/obi-wan.jpg"
-}
+};
 
 
 //Add pictures of characters to DOM
@@ -58,179 +70,133 @@ for (a=0; a < Object.values(characterImages).length; a++) {
 };
 
 
-//Character HP needs to display with each picture
-    //$(".characterImages").text("100")
-
 //Set the CSS class for each character image to "characterImgs"
  $("#startingCharacters").children("img").attr("class", "characterImgs");
 
 
-//Randomize the amount of HP for each character (between 100 and 200 maybe?)
-    //I think they're supposed to be set to the values in the video
-    //Only come back to this if you need it or delete it
-
 
 //On.Click event for the player to choose their character
-        /*
-        $("#startingCharacters").on("click", function() {
-        console.log("Bananas")
-            //Move other characters from the character bay to the zone "Enemies Available to Attack"
-            if ($("#luke")) {console.log("Batman")}
-                // if (Luke is choosen) {Move other characters to array enemiesToAttack}
-                // elseif (Darth Maul is choosen) {Move other characters to array enemiesToAttack}
-            
-                //Color the character background's red
-        });*/
 //How am I going to prevent them from hopping around after another click?
 if ($("#startingCharacters").on("click", function(event) {
-    if (event.target.id === "luke") {
-        $("#luke").appendTo("#choosenCharacter");
-        $("#startingCharacters").children("img").appendTo("#enemiesToAttack");
-        console.log("choosen luke");
-        console.log("Luke HP: " + characterHP.luke)
-    }
+    console.log("event.target.id", event.target.id);
 
+     // Characters need to be put into the enemiesToAttack array for separation
+    function waitingToDefend (name) {
+    // For preventing the chosenCharacter from being placed in the enemiesArray
+    if (name !== event.target.id) {
+       enemiesArray.push(name);
+    }
     
-    // if ($("#luke").on("click", function() {
-    //     $("#luke").appendTo("#choosenCharacter");
-    //     $("#startingCharacters").children("img").appendTo("#enemiesToAttack");
-    //     console.log("choosen luke");
-    //     console.log("HP: " + characterHP.luke)
-    // }))
+}
 
-
-
-     
-    else if (event.target.id === "maul") {
-        $("#maul").appendTo("#choosenCharacter");
+    if (event.target.id === "luke") {
+        $("#luke").appendTo("#chosenCharacter");
         $("#startingCharacters").children("img").appendTo("#enemiesToAttack");
-        console.log("choosen maul");
-        console.log("Maul HP: " + characterHP.maul)
+        chosenCharacter = event.target.id;
+        charactersArray.forEach(waitingToDefend);
+        console.log("Enemiers Array Test ", enemiesArray);
+        console.log("Luke HP: " + characters.luke.hp)
     }
+    
+  
 
+    else if (event.target.id === "maul") {
+        $("#maul").appendTo("#chosenCharacter");
+        $("#startingCharacters").children("img").appendTo("#enemiesToAttack");
+        chosenCharacter = event.target.id;
+        charactersArray.forEach(waitingToDefend);
+        console.log("Enemiers Array Test ", enemiesArray);
+        console.log("Maul HP: " + characters.maul.hp)
+    }
 
 
      
     else if (event.target.id === "vader") {
-        $("#vader").appendTo("#choosenCharacter");
+        $("#vader").appendTo("#chosenCharacter");
         $("#startingCharacters").children("img").appendTo("#enemiesToAttack");
-        console.log("choosen vader");
-        console.log("Vader HP: " + characterHP.vader)
+        chosenCharacter = event.target.id;
+        charactersArray.forEach(waitingToDefend);
+        console.log("Enemiers Array Test ", enemiesArray);
+        console.log("Vader HP: " + characters.vader.hp)
     }
 
 
 
      
     else if (event.target.id === "obi") {
-        $("#obi").appendTo("#choosenCharacter");
+        $("#obi").appendTo("#chosenCharacter");
         $("#startingCharacters").children("img").appendTo("#enemiesToAttack");
-        console.log("choosen obi");
-        console.log("Obi HP: " + characterHP.obi)
+        chosenCharacter = event.target.id;
+        charactersArray.forEach(waitingToDefend);
+        console.log("Enemiers Array Test ", enemiesArray);
+        console.log("Obi HP: " + characters.obi.hp)
     };
 }));
 
-        /*
-        if ($("#luke").on("click", function() {
-            $("#luke").appendTo("#choosenCharacter");
-            $("#startingCharacters").children("img").appendTo("#enemiesToAttack")
-        }));*/
-        /*
-        if ($("#maul").on("click", function() {
-            $("#maul").appendTo("#choosenCharacter");
-            $("#startingCharacters").children("img").appendTo("#enemiesToAttack")
-        }));
-
-        if ($("#vader").on("click", function() {
-            $("#vader").appendTo("#choosenCharacter");
-            $("#startingCharacters").children("img").appendTo("#enemiesToAttack")
-        }));
-
-        if ($("#obi").on("click", function() {
-            $("#obi").appendTo("#choosenCharacter");
-            $("#startingCharacters").children("img").appendTo("#enemiesToAttack")
-        }));*/
 
 //On.Click event for the player to choose which enemy to attack first
     //Move this character to the zone "Defender"
     //Should prevent additional defenders until this one is defeated
 if  ($("#enemiesToAttack").on("click", function(event) {
+
+    if (defenderArray.length === 0) {
      
-        //Moves the enemy to being a defender
-    if  (event.target.id === "luke") {
-        $("#luke").appendTo("#defenderDiv");
-
-        //Color the defender's background black
-        $("#defenderDiv").children("img").attr("class", "defenderImgs");
-        console.log("defender luke")
-
-
-            // if ($("#luke").on("click", function() {
-            //     $("#luke").appendTo("#defenderDiv");
-
-            //     //Color the defender's background black
-            //     $("#defenderDiv").children("img").attr("class", "defenderImgs");
-            //     console.log("defender luke")
-            // }));
-        }
-    
-    
             //Moves the enemy to being a defender
-    else if (event.target.id === "maul") {
-            $("#maul").appendTo("#defenderDiv");
-            
+        if  (event.target.id === "luke") {
+            $("#luke").appendTo("#defenderDiv");
+            defenderArray.push(event.target.id);
             //Color the defender's background black
             $("#defenderDiv").children("img").attr("class", "defenderImgs");
-            console.log("defender maul");
-            defenderOccupant = $("#defenderDiv").children("img").length;
-            console.log("defenderOccupant be 1: ", defenderOccupant)
-            console.log("defenderOccupant is 1? ", defenderOccupant === 1)
-        }
-    
-    
-    
+            console.log("defender luke")
+            }
+        
+        
+                //Moves the enemy to being a defender
+        else if (event.target.id === "maul") {
+                $("#maul").appendTo("#defenderDiv");
+                defenderArray.push(event.target.id);
+                //Color the defender's background black
+                $("#defenderDiv").children("img").attr("class", "defenderImgs");
+                console.log("defender maul");
+            }
+        
+        
+        
+                //Moves the enemy to being a defender 
+        else if (event.target.id === "vader") {
+                $("#vader").appendTo("#defenderDiv");
+                defenderArray.push(event.target.id);
+                //Color the defender's background black
+                $("#defenderDiv").children("img").attr("class", "defenderImgs");
+                console.log("defender vader")
+            }
+        
+        
+        
             //Moves the enemy to being a defender 
-    else if (event.target.id === "vader") {
-            $("#vader").appendTo("#defenderDiv");
-
-            //Color the defender's background black
-            $("#defenderDiv").children("img").attr("class", "defenderImgs");
-            console.log("defender vader")
+        else if (event.target.id === "obi") {
+                $("#obi").appendTo("#defenderDiv");
+                defenderArray.push(event.target.id);
+                //Color the defender's background black
+                $("#defenderDiv").children("img").attr("class", "defenderImgs");
+                console.log("defender obi")
+            }
         }
-    
-    
-    
-        //Moves the enemy to being a defender 
-    else if (event.target.id === "obi") {
-            $("#obi").appendTo("#defenderDiv");
-
-            //Color the defender's background black
-            $("#defenderDiv").children("img").attr("class", "defenderImgs");
-            console.log("defender obi")
-        }
-                //Trash console.log("test2 ", $("#defenderDiv").children("img").length)
     }));
 
 
-//Variable to store the 'Defender' character HP
-    //var defendersHP = characterHP[$("#defenderDiv").children("img")[0].id];
-    
-    if (true) {
-        var defendersHP = characterHP[$("#defenderDiv").children("img")[0].id];
-        var characterAtk = characterAtk[$("#choosenCharacter").children("img")[0].id];
-        console.log("First def HP Check ", defendersHP)
-    };
-            
-    
 
 //An attack button for your character to attack the defender
     //Why isn't the attack button subtracting HP from the defender???
 $("#attackButton").on("click", function() {
-    defendersHP = defendersHP - characterAtk;
-    console.log("defenders HP ", defendersHP);
+    if (chosenCharacter === "luke") {
+        characters.luke.hp
+    }
+    //console.log("fighters HP ", chosenCharacter);
     //defendersHP = characterHP[$("#defenderDiv").children("img")[0].id] - 
-    console.log("After attack: " + characterHP[$("#defenderDiv").children("img")[0].id]);
-    console.log("Dude Attacking: " + $('#choosenCharacter').children("img")[0].id);
-    console.log("Dude Atk Amt: " + characterAtk[$("#choosenCharacter").children("img")[0].id])
+    //console.log("After attack: " + characterHP[$("#defenderDiv").children("img")[0].id]);
+    //console.log("Dude Attacking: " + $('#chosenCharacter').children("img")[0].id);
+    //console.log("Dude Atk Amt: " + characterAtk[$("#chosenCharacter").children("img")[0].id])
 });
     //Attach button should only work when another character has been choosen as the Defender
         //Otherwise, a message appears to say 'No enemy here'
