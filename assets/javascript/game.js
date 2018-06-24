@@ -206,22 +206,15 @@ if  ($("#enemiesToAttack").on("click", function(event) {
 $("#attackButton").on("click", function() {
     chosenCharacterHp = chosenCharacterHp - defenderAtk;
     defenderHp = defenderHp - chosenCharacterAtk;
-    chosenCharacterAtk = chosenCharacterAtk + Math.floor(Math.random() * 10)
+    chosenCharacterAtk = chosenCharacterAtk + Math.floor(Math.random() * 10);
+    $("#playerHp").html("<p>Player's remaining HP: " + chosenCharacterHp + "</p>");
+    $("#playerAtk").html("<p>Player's Attack power: " + chosenCharacterAtk + "</p>");
+    $("#defenderHp").html("<p>Defender's remaining HP: " + defenderHp + "</p>");
+    $("#defenderAtk").html("<p>Defender's Attack power: " + defenderAtk + "</p>");
 
-    // if      (chosenCharacter === "luke") {
-    // }
 
-    // else if (chosenCharacter === "maul") {
-    // }
-
-    // else if (chosenCharacter === "vader") {
-    // }
-
-    // else if (chosenCharacter === "obi") {
-    // }
-
-    console.log("Defender Array ", defenderArray)
-    console.log("Chosen Character HP / Atk ", chosenCharacterHp + " / " + chosenCharacterAtk)
+    console.log("Defender Array ", defenderArray);
+    console.log("Chosen Character HP / Atk ", chosenCharacterHp + " / " + chosenCharacterAtk);
     console.log("Defenders HP / Atk ", defenderHp + " / " + defenderAtk)
     //console.log()
  
