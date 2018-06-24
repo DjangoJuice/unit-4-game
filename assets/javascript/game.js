@@ -93,6 +93,8 @@ if ($("#startingCharacters").on("click", function(event) {
         $("#luke").appendTo("#chosenCharacter");
         $("#startingCharacters").children("img").appendTo("#enemiesToAttack");
         chosenCharacter = event.target.id;
+        chosenCharacterHp = characters.luke.hp;
+        chosenCharacterAtk = characters.luke.atk;
         charactersArray.forEach(waitingToDefend);
         console.log("Enemiers Array Test ", enemiesArray);
         console.log("Luke HP: " + characters.luke.hp)
@@ -104,6 +106,8 @@ if ($("#startingCharacters").on("click", function(event) {
         $("#maul").appendTo("#chosenCharacter");
         $("#startingCharacters").children("img").appendTo("#enemiesToAttack");
         chosenCharacter = event.target.id;
+        chosenCharacterHp = characters.maul.hp;
+        chosenCharacterAtk = characters.maul.atk;
         charactersArray.forEach(waitingToDefend);
         console.log("Enemiers Array Test ", enemiesArray);
         console.log("Maul HP: " + characters.maul.hp)
@@ -115,6 +119,8 @@ if ($("#startingCharacters").on("click", function(event) {
         $("#vader").appendTo("#chosenCharacter");
         $("#startingCharacters").children("img").appendTo("#enemiesToAttack");
         chosenCharacter = event.target.id;
+        chosenCharacterHp = characters.vader.hp;
+        chosenCharacterAtk = characters.vader.atk;
         charactersArray.forEach(waitingToDefend);
         console.log("Enemiers Array Test ", enemiesArray);
         console.log("Vader HP: " + characters.vader.hp)
@@ -127,6 +133,8 @@ if ($("#startingCharacters").on("click", function(event) {
         $("#obi").appendTo("#chosenCharacter");
         $("#startingCharacters").children("img").appendTo("#enemiesToAttack");
         chosenCharacter = event.target.id;
+        chosenCharacterHp = characters.obi.hp;
+        chosenCharacterAtk = characters.obi.atk;
         charactersArray.forEach(waitingToDefend);
         console.log("Enemiers Array Test ", enemiesArray);
         console.log("Obi HP: " + characters.obi.hp)
@@ -145,6 +153,8 @@ if  ($("#enemiesToAttack").on("click", function(event) {
         if  (event.target.id === "luke") {
             $("#luke").appendTo("#defenderDiv");
             defenderArray.push(event.target.id);
+            defenderHp = characters.luke.hp;
+            defenderAtk = characters.luke.atk;
             //Color the defender's background black
             $("#defenderDiv").children("img").attr("class", "defenderImgs");
             console.log("defender luke")
@@ -155,6 +165,8 @@ if  ($("#enemiesToAttack").on("click", function(event) {
         else if (event.target.id === "maul") {
                 $("#maul").appendTo("#defenderDiv");
                 defenderArray.push(event.target.id);
+                defenderHp = characters.maul.hp;
+                defenderAtk = characters.maul.atk;
                 //Color the defender's background black
                 $("#defenderDiv").children("img").attr("class", "defenderImgs");
                 console.log("defender maul");
@@ -166,6 +178,8 @@ if  ($("#enemiesToAttack").on("click", function(event) {
         else if (event.target.id === "vader") {
                 $("#vader").appendTo("#defenderDiv");
                 defenderArray.push(event.target.id);
+                defenderHp = characters.vader.hp;
+                defenderAtk = characters.vader.atk;
                 //Color the defender's background black
                 $("#defenderDiv").children("img").attr("class", "defenderImgs");
                 console.log("defender vader")
@@ -177,6 +191,8 @@ if  ($("#enemiesToAttack").on("click", function(event) {
         else if (event.target.id === "obi") {
                 $("#obi").appendTo("#defenderDiv");
                 defenderArray.push(event.target.id);
+                defenderHp = characters.obi.hp;
+                defenderAtk = characters.obi.atk;
                 //Color the defender's background black
                 $("#defenderDiv").children("img").attr("class", "defenderImgs");
                 console.log("defender obi")
@@ -187,18 +203,30 @@ if  ($("#enemiesToAttack").on("click", function(event) {
 
 
 //An attack button for your character to attack the defender
-    //Why isn't the attack button subtracting HP from the defender???
 $("#attackButton").on("click", function() {
-    if (chosenCharacter === "luke") {
-        characters.luke.hp
-    }
-    //console.log("fighters HP ", chosenCharacter);
-    //defendersHP = characterHP[$("#defenderDiv").children("img")[0].id] - 
-    //console.log("After attack: " + characterHP[$("#defenderDiv").children("img")[0].id]);
-    //console.log("Dude Attacking: " + $('#chosenCharacter').children("img")[0].id);
-    //console.log("Dude Atk Amt: " + characterAtk[$("#chosenCharacter").children("img")[0].id])
+    chosenCharacterHp = chosenCharacterHp - defenderAtk;
+    defenderHp = defenderHp - chosenCharacterAtk;
+    chosenCharacterAtk = chosenCharacterAtk + Math.floor(Math.random() * 10)
+
+    // if      (chosenCharacter === "luke") {
+    // }
+
+    // else if (chosenCharacter === "maul") {
+    // }
+
+    // else if (chosenCharacter === "vader") {
+    // }
+
+    // else if (chosenCharacter === "obi") {
+    // }
+
+    console.log("Defender Array ", defenderArray)
+    console.log("Chosen Character HP / Atk ", chosenCharacterHp + " / " + chosenCharacterAtk)
+    console.log("Defenders HP / Atk ", defenderHp + " / " + defenderAtk)
+    //console.log()
+ 
 });
-    //Attach button should only work when another character has been choosen as the Defender
+    //Attack button should only work when another character has been choosen as the Defender
         //Otherwise, a message appears to say 'No enemy here'
     //"You attacked 'Darth Maul' for (random number of damage)" -> amount will increase each time you attack
     //"'Darth Maul' attacked you back for (Set amount of dmg or random amount of dmg?)"
