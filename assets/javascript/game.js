@@ -98,7 +98,7 @@ if ($("#startingCharacters").on("click", function(event) {
         charactersArray.forEach(waitingToDefend);
         //On screen text needs to clear in the case of message "Choose a Player!"
         $("#playerHp").html("<p></p>");
-        console.log("Enemiers Array Test ", enemiesArray);
+        console.log("Enemies Array Test ", enemiesArray);
         console.log("Luke HP: " + characters.luke.hp)
     }
     
@@ -113,7 +113,7 @@ if ($("#startingCharacters").on("click", function(event) {
         charactersArray.forEach(waitingToDefend);
         //On screen text needs to clear in the case of message "Choose a Defender!"
         $("#playerHp").html("<p></p>");
-        console.log("Enemiers Array Test ", enemiesArray);
+        console.log("Enemies Array Test ", enemiesArray);
         console.log("Maul HP: " + characters.maul.hp)
     }
 
@@ -128,7 +128,7 @@ if ($("#startingCharacters").on("click", function(event) {
         charactersArray.forEach(waitingToDefend);
         //On screen text needs to clear in the case of message "Choose a Defender!"
         $("#playerHp").html("<p></p>");
-        console.log("Enemiers Array Test ", enemiesArray);
+        console.log("Enemies Array Test ", enemiesArray);
         console.log("Vader HP: " + characters.vader.hp)
     }
 
@@ -144,7 +144,7 @@ if ($("#startingCharacters").on("click", function(event) {
         charactersArray.forEach(waitingToDefend);
         //On screen text needs to clear in the case of message "Choose a Defender!"
         $("#playerHp").html("<p></p>");
-        console.log("Enemiers Array Test ", enemiesArray);
+        console.log("Enemies Array Test ", enemiesArray);
         console.log("Obi HP: " + characters.obi.hp)
     };
 }));
@@ -224,7 +224,19 @@ $("#attackButton").on("click", function() {
     defenderHp = defenderHp - chosenCharacterAtk;
     chosenCharacterAtk = chosenCharacterAtk + Math.floor(Math.random() * 10);
 
-    if (charactersArray.indexOf(chosenCharacter) === -1) {
+
+    if (defenderArray.length === 0 && enemiesArray.length === 0 /*&& chosenCharacterHp > 0*/) {
+        $("#playerHp").html("WINNER!!!!");
+        $("#playerAtk").html("");
+        $("#defenderHp").html("");
+        $("#defenderAtk").html("");
+        $("#enemiesId").html("");
+        $("#fightId").html("");
+        $("#defenderId").html("");
+        
+    }
+
+    else if (charactersArray.indexOf(chosenCharacter) === -1) {
         $("#playerHp").html("<p>Choose a player!</p>");
     }
 
@@ -252,14 +264,17 @@ $("#attackButton").on("click", function() {
 
     if (defenderHp <= 0) {
         $("#defenderDiv").html("");
+        enemiesArray.splice(0, 1)
         defenderArray = [];
         console.log("--------------------");
         console.log("D E F E N D E R DEAD")
     };
 
+
     console.log("Defender Array ", defenderArray);
     console.log("Chosen Character HP / Atk ", chosenCharacterHp + " / " + chosenCharacterAtk);
     console.log("Defenders HP / Atk ", defenderHp + " / " + defenderAtk)
+    console.log("End Game Enemies Array", enemiesArray);
     //console.log()
  
 });
