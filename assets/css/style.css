@@ -17,3 +17,7 @@ body {
     background-color: black;
     border: solid 1px red;
 }
+
+#playerHp {
+    padding-top: 30px;
+}

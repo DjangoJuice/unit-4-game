@@ -78,7 +78,7 @@ for (a=0; a < Object.values(characterImages).length; a++) {
 //On.Click event for the player to choose their character
 //How am I going to prevent them from hopping around after another click?
 if ($("#startingCharacters").on("click", function(event) {
-    console.log("event.target.id", event.target.id);
+    console.log("Chosen Character is", event.target.id);
 
      // Characters need to be put into the enemiesToAttack array for separation
     function waitingToDefend (name) {
@@ -96,6 +96,8 @@ if ($("#startingCharacters").on("click", function(event) {
         chosenCharacterHp = characters.luke.hp;
         chosenCharacterAtk = characters.luke.atk;
         charactersArray.forEach(waitingToDefend);
+        //On screen text needs to clear in the case of message "Choose a Player!"
+        $("#playerHp").html("<p></p>");
         console.log("Enemiers Array Test ", enemiesArray);
         console.log("Luke HP: " + characters.luke.hp)
     }
@@ -109,6 +111,8 @@ if ($("#startingCharacters").on("click", function(event) {
         chosenCharacterHp = characters.maul.hp;
         chosenCharacterAtk = characters.maul.atk;
         charactersArray.forEach(waitingToDefend);
+        //On screen text needs to clear in the case of message "Choose a Defender!"
+        $("#playerHp").html("<p></p>");
         console.log("Enemiers Array Test ", enemiesArray);
         console.log("Maul HP: " + characters.maul.hp)
     }
@@ -122,6 +126,8 @@ if ($("#startingCharacters").on("click", function(event) {
         chosenCharacterHp = characters.vader.hp;
         chosenCharacterAtk = characters.vader.atk;
         charactersArray.forEach(waitingToDefend);
+        //On screen text needs to clear in the case of message "Choose a Defender!"
+        $("#playerHp").html("<p></p>");
         console.log("Enemiers Array Test ", enemiesArray);
         console.log("Vader HP: " + characters.vader.hp)
     }
@@ -136,6 +142,8 @@ if ($("#startingCharacters").on("click", function(event) {
         chosenCharacterHp = characters.obi.hp;
         chosenCharacterAtk = characters.obi.atk;
         charactersArray.forEach(waitingToDefend);
+        //On screen text needs to clear in the case of message "Choose a Defender!"
+        $("#playerHp").html("<p></p>");
         console.log("Enemiers Array Test ", enemiesArray);
         console.log("Obi HP: " + characters.obi.hp)
     };
@@ -155,6 +163,8 @@ if  ($("#enemiesToAttack").on("click", function(event) {
             defenderArray.push(event.target.id);
             defenderHp = characters.luke.hp;
             defenderAtk = characters.luke.atk;
+            //On screen text needs to clear in the case of message "Choose a Defender!"
+            $("#playerHp").html("<p></p>");
             //Color the defender's background black
             $("#defenderDiv").children("img").attr("class", "defenderImgs");
             console.log("defender luke")
@@ -167,6 +177,8 @@ if  ($("#enemiesToAttack").on("click", function(event) {
                 defenderArray.push(event.target.id);
                 defenderHp = characters.maul.hp;
                 defenderAtk = characters.maul.atk;
+                //On screen text needs to clear in the case of message "Choose a Defender!"
+                $("#playerHp").html("<p></p>");
                 //Color the defender's background black
                 $("#defenderDiv").children("img").attr("class", "defenderImgs");
                 console.log("defender maul");
@@ -180,6 +192,8 @@ if  ($("#enemiesToAttack").on("click", function(event) {
                 defenderArray.push(event.target.id);
                 defenderHp = characters.vader.hp;
                 defenderAtk = characters.vader.atk;
+                //On screen text needs to clear in the case of message "Choose a Defender!"
+                $("#playerHp").html("<p></p>");
                 //Color the defender's background black
                 $("#defenderDiv").children("img").attr("class", "defenderImgs");
                 console.log("defender vader")
@@ -193,6 +207,8 @@ if  ($("#enemiesToAttack").on("click", function(event) {
                 defenderArray.push(event.target.id);
                 defenderHp = characters.obi.hp;
                 defenderAtk = characters.obi.atk;
+                //On screen text needs to clear in the case of message "Choose a Defender!"
+                $("#playerHp").html("<p></p>");
                 //Color the defender's background black
                 $("#defenderDiv").children("img").attr("class", "defenderImgs");
                 console.log("defender obi")
@@ -207,11 +223,39 @@ $("#attackButton").on("click", function() {
     chosenCharacterHp = chosenCharacterHp - defenderAtk;
     defenderHp = defenderHp - chosenCharacterAtk;
     chosenCharacterAtk = chosenCharacterAtk + Math.floor(Math.random() * 10);
-    $("#playerHp").html("<p>Player's remaining HP: " + chosenCharacterHp + "</p>");
-    $("#playerAtk").html("<p>Player's Attack power: " + chosenCharacterAtk + "</p>");
-    $("#defenderHp").html("<p>Defender's remaining HP: " + defenderHp + "</p>");
-    $("#defenderAtk").html("<p>Defender's Attack power: " + defenderAtk + "</p>");
 
+    if (charactersArray.indexOf(chosenCharacter) === -1) {
+        $("#playerHp").html("<p>Choose a player!</p>");
+    }
+
+    else if (defenderArray.length === 0 ) {
+        $("#playerHp").html("<p>Choose a defender!</p>");
+    }
+
+    else {
+        $("#playerHp").html("<p>Player's remaining HP: " + chosenCharacterHp + "</p>");
+        $("#playerAtk").html("<p>Player's Attack power: " + chosenCharacterAtk + "</p>");
+        $("#defenderHp").html("<p>Defender's remaining HP: " + defenderHp + "</p>");
+        $("#defenderAtk").html("<p>Defender's Attack power: " + defenderAtk + "</p>");
+    };
+
+    if (chosenCharacterHp <= 0) {
+        $("#chosenCharacter").html("");
+        $("#playerHp").html("<h2>LOSE! You let your character die!</h2>");
+        $("#playerAtk").html("");
+        $("#defenderHp").html("");
+        $("#defenderAtk").html("");
+        console.log("----------------------");
+        console.log("C H A R A C T E R DEAD")
+    };
+
+
+    if (defenderHp <= 0) {
+        $("#defenderDiv").html("");
+        defenderArray = [];
+        console.log("--------------------");
+        console.log("D E F E N D E R DEAD")
+    };
 
     console.log("Defender Array ", defenderArray);
     console.log("Chosen Character HP / Atk ", chosenCharacterHp + " / " + chosenCharacterAtk);
